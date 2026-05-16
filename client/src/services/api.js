@@ -1,7 +1,7 @@
 import axios from 'axios';
-
-const API_BASE = 'http://localhost:3001/api';
-
+// 根据环境自动选择 API 地址
+// 生产环境使用相对路径 /api，开发环境使用 localhost
+const API_BASE = import.meta.env.PROD ? '/api' : 'http://localhost:3001/api';
 const api = axios.create({
   baseURL: API_BASE,
   timeout: 15000,
@@ -9,7 +9,6 @@ const api = axios.create({
     'Content-Type': 'application/json'
   }
 });
-
 // 请求拦截器 - 自动添加token
 api.interceptors.request.use(
   (config) => {
@@ -21,7 +20,6 @@ api.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
-
 // 响应拦截器 - 统一错误处理
 api.interceptors.response.use(
   (response) => response.data,
@@ -38,7 +36,6 @@ api.interceptors.response.use(
     return Promise.reject({ message: '网络连接失败，请检查网络设置' });
   }
 );
-
 // ==================== 认证API ====================
 export const authAPI = {
   register: (data) => api.post('/auth/register', data),
@@ -49,7 +46,6 @@ export const authAPI = {
   }),
   getUserProfile: (id) => api.get(`/auth/${id}`)
 };
-
 // ==================== 图片API ====================
 export const photoAPI = {
   getPhotos: (params) => api.get('/photos', { params }),
@@ -61,7 +57,6 @@ export const photoAPI = {
   deletePhoto: (id) => api.delete(`/photos/${id}`),
   getCategories: () => api.get('/photos/categories/list')
 };
-
 // ==================== 收藏API ====================
 export const favoriteAPI = {
   getFavorites: (params) => api.get('/favorites', { params }),
@@ -69,17 +64,7 @@ export const favoriteAPI = {
   removeFavorite: (photoId) => api.delete(`/favorites/${photoId}`),
   checkFavorite: (photoId) => api.get(`/favorites/check/${photoId}`)
 };
-
 // ==================== 点赞API ====================
 export const likeAPI = {
   like: (photoId) => api.post(`/likes/${photoId}`),
-  unlike: (photoId) => api.delete(`/likes/${photoId}`)
-};
-
-// ==================== 评论API ====================
-export const commentAPI = {
-  addComment: (photoId, content) => api.post(`/comments/${photoId}`, { content }),
-  deleteComment: (commentId) => api.delete(`/comments/${commentId}`)
-};
-
-export default api;
+  unlike: (
