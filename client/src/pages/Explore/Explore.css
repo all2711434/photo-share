@@ -1,0 +1,197 @@
+/* ============================================
+   🌌 探索页面样式
+   ============================================ */
+
+.explore-page {
+  padding-top: 90px;
+  padding-bottom: 60px;
+}
+
+.explore-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.explore-search {
+  flex: 1;
+  min-width: 200px;
+  position: relative;
+}
+
+.explore-search .search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 18px;
+}
+
+.explore-search input {
+  width: 100%;
+  padding: 10px 16px 10px 42px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: all var(--transition-normal);
+}
+
+.explore-search input:focus {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-glow);
+}
+
+.explore-search input::placeholder {
+  color: var(--text-muted);
+}
+
+.explore-sort {
+  display: flex;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-md);
+  padding: 4px;
+  border: 1px solid var(--border-color);
+}
+
+.explore-sort button {
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.explore-sort button:hover {
+  color: var(--primary);
+}
+
+.explore-sort button.active {
+  background: rgba(0, 240, 255, 0.08);
+  color: var(--primary);
+}
+
+/* 瀑布流 */
+.explore-masonry {
+  columns: 4;
+  column-gap: 16px;
+}
+
+.explore-card {
+  break-inside: avoid;
+  margin-bottom: 16px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  text-decoration: none;
+  transition: all var(--transition-normal);
+  animation: fade-in 0.4s ease both;
+  display: block;
+}
+
+.explore-card:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-glow);
+}
+
+.explore-card-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.explore-card-image img {
+  width: 100%;
+  display: block;
+  transition: transform var(--transition-slow);
+}
+
+.explore-card:hover .explore-card-image img {
+  transform: scale(1.05);
+}
+
+.explore-card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 40px 14px 14px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.explore-card:hover .explore-card-overlay {
+  opacity: 1;
+}
+
+.explore-card-overlay h3 {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.explore-card-meta {
+  display: flex;
+  gap: 10px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.explore-card-meta span {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.explore-card-meta span:first-child {
+  color: var(--primary);
+}
+
+/* 响应式 */
+@media (max-width: 1200px) {
+  .explore-masonry {
+    columns: 3;
+  }
+}
+
+@media (max-width: 768px) {
+  .explore-masonry {
+    columns: 2;
+    column-gap: 12px;
+  }
+
+  .explore-card {
+    margin-bottom: 12px;
+  }
+
+  .explore-toolbar {
+    flex-direction: column;
+  }
+
+  .explore-search {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .explore-masonry {
+    columns: 2;
+  }
+}

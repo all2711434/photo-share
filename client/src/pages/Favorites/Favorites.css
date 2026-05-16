@@ -1,0 +1,122 @@
+/* ============================================
+   🌌 收藏页面样式
+   ============================================ */
+
+.favorites-page {
+  padding-top: 90px;
+  padding-bottom: 60px;
+}
+
+.favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.favorite-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  text-decoration: none;
+  transition: all var(--transition-normal);
+  animation: slide-up 0.4s ease both;
+}
+
+.favorite-card:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-4px);
+}
+
+.favorite-image-wrapper {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+
+.favorite-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.favorite-card:hover .favorite-image-wrapper img {
+  transform: scale(1.05);
+}
+
+.favorite-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.favorite-card:hover .favorite-overlay {
+  opacity: 1;
+}
+
+.unfavorite-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: rgba(255, 45, 117, 0.2);
+  border: 1px solid rgba(255, 45, 117, 0.4);
+  border-radius: var(--radius-md);
+  color: var(--accent);
+  font-family: var(--font-heading);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.unfavorite-btn:hover {
+  background: rgba(255, 45, 117, 0.3);
+}
+
+.favorite-info {
+  padding: 14px 16px;
+}
+
+.favorite-info h3 {
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.favorite-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.favorite-meta span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.favorite-meta span:first-child {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .favorites-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+  }
+}
