@@ -69,15 +69,18 @@ app.use((err, req, res, next) => {
 // ==================== 启动服务 ====================
 const PORT = process.env.PORT || 3001;
 
-app.listen(PORT, () => {
-  console.log(`
+// 只在本地开发时启动服务器（Vercel Serverless 不需要）
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`
   ╔══════════════════════════════════════════════╗
   ║     📸 PhotoShare API Server                 ║
   ║     🚀 服务已启动                             ║
   ║     📍 http://localhost:${PORT}                 ║
   ║     🔗 API: http://localhost:${PORT}/api       ║
   ╚══════════════════════════════════════════════╝
-  `);
-});
+    `);
+  });
+}
 
 module.exports = app;
