@@ -1,4 +1,9 @@
 {
+  "outputDirectory": "client/dist",
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api" }
+  ]
+}{
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api" }
   ]
