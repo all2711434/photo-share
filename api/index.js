@@ -1,5 +1,3 @@
-const express = require('express');
-
 let app;
 let loadError = null;
 
@@ -12,22 +10,14 @@ try {
 }
 
 if (!app) {
-  app = express();
-  app.get('/api/health', (req, res) => {
+  app = (req, res) => {
     res.status(500).json({
       success: false,
       error: 'App failed to load',
       message: loadError ? loadError.message : 'Unknown error',
       stack: loadError ? loadError.stack : undefined
     });
-  });
-  app.use((req, res) => {
-    res.status(500).json({
-      success: false,
-      error: 'App failed to load',
-      message: loadError ? loadError.message : 'Unknown error'
-    });
-  });
+  };
 }
 
 module.exports = app;
