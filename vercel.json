@@ -3,7 +3,12 @@
   "buildCommand": "cd client && npm install && npm run build",
   "outputDirectory": "client/dist",
   "installCommand": "npm install",
-  "serverExternalPackages": ["express", "cors", "pg", "@neondatabase/serverless"],
+  "functions": {
+    "api/**/*.js": {
+      "includeFiles": "server/**/*",
+      "externalPackages": ["express", "cors", "pg", "@neondatabase/serverless"]
+    }
+  },
   "rewrites": [
     {
       "source": "/api/((?!health).*)",
