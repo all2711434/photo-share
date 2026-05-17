@@ -173,8 +173,8 @@ app.get('/api/photos', async (req, res) => {
     const { category, page = 1, limit = 12 } = req.query;
     const offset = (page - 1) * limit;
 
-    let whereClause = 'WHERE p.status = ?';
-    const params = ['approved'];
+    let whereClause = 'WHERE 1=1';
+    const params = [];
 
     if (category && category !== 'all') {
       whereClause += ' AND p.category = ?';
