@@ -14,7 +14,7 @@ app.use(cors({
   origin: process.env.CLIENT_URL || 'http://localhost:3000',
   credentials: true
 }));
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // ==================== 数据库连接 ====================
@@ -222,6 +222,57 @@ app.get('/api/photos/:id', async (req, res) => {
   } catch (error) {
     console.error('获取照片详情错误:', error);
     res.status(500).json({ success: false, message: '获取照片详情失败' });
+  }
+});
+
+// 上传图片（Vercel 环境：接收 base64 图片数据）
+app.post('/api/photos', authMiddleware, async (req, res) => {
+  try {
+    const { title, description, image_data, category_id, tags } = req.body;
+
+    if (!image_data) {
+      return res.status(400).json({ success: false, message: '请提供图片数据' });
+    }
+
+    if (!title) {
+      return res.status(400).json({ success: false, message: '请输入图片标题' });
+    }
+
+    // image_data 可以是 base64 data URL 或普通 URL
+    const filePath = image_data.startsWith('data:') ? image_data : image_data;
+    const thumbnailPath = image_data.startsWith('data:') ? image_data : image_data;
+
+    // 保存到数据库
+    const [result] = await db.query(
+      `INSERT INTO photos (user_id, title, description, file_path, thumbnail_path, category_id, tags, width, height, file_size)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        req.user.id,
+        title,
+        description || '',
+        filePath,
+        thumbnailPath,
+        category_id || null,
+        tags || '',
+        800,
+        600,
+        0
+      ]
+    );
+
+    res.status(201).json({
+      success: true,
+      message: '上传成功',
+      data: {
+        id: result[0]?.id || 0,
+        title,
+        file_path: filePath,
+        thumbnail_path: thumbnailPath
+      }
+    });
+  } catch (error) {
+    console.error('上传图片错误:', error);
+    res.status(500).json({ success: false, message: '上传失败: ' + error.message });
   }
 });
 
